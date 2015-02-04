@@ -6,6 +6,18 @@ var angle = 0.5;
 var wait = 1;
 var frameCount = 0;
 
+	var planetOneR = Math.floor(Math.random()*255);
+	var planetOneG = Math.floor(Math.random()*255);
+	var planetOneB = Math.floor(Math.random()*255);
+
+	var planetTwoR = Math.floor(Math.random()*255);
+	var planetTwoG = Math.floor(Math.random()*255);
+	var planetTwoB = Math.floor(Math.random()*255);
+
+	var planetThreeR = Math.floor(Math.random()*255);
+	var planetThreeG = Math.floor(Math.random()*255);
+	var planetThreeB = Math.floor(Math.random()*255);
+
 // one-time initialization.
 // by default, this method is only invoked once, upon page launch.
 // - canvas: an HTML canvas element
@@ -35,20 +47,21 @@ function draw(canvas, ctx) {
     // rotate coordinate space by 'angle' degrees
     ctx.rotate(angle * Math.PI/180);
     // draw a black, 100x100 rectangle
+
   	ctx.beginPath();
-  	ctx.fillStyle = 'green';
+  	ctx.fillStyle = "rgb(" + planetOneR + "," + planetOneG + "," + planetOneB + ")";
 	ctx.arc(0,-150,30,0,2*Math.PI);
 	ctx.fill();
 	ctx.closePath();
 
   	ctx.beginPath();
-  	ctx.fillStyle = 'red';
+  	ctx.fillStyle = "rgb(" + planetTwoR + "," + planetTwoG + "," + planetTwoB + ")";
 	ctx.arc(100,-50,15,0,2*Math.PI);
 	ctx.fill();
 	ctx.closePath();
 
   	ctx.beginPath();
-  	ctx.fillStyle = 'violet';
+  	ctx.fillStyle = "rgb(" + planetThreeR + "," + planetThreeG + "," + planetThreeB + ")";
 	ctx.arc(-300,0,40,0,2*Math.PI);
 	ctx.fill();
 	ctx.closePath();
