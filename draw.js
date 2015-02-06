@@ -3,21 +3,9 @@
 var h;
 var w;
 var planets = [];
-var angle = 0.5;
 var wait = 1;
 var frameCount = 0;
-
-	var planetOneR = Math.floor(Math.random()*255);
-	var planetOneG = Math.floor(Math.random()*255);
-	var planetOneB = Math.floor(Math.random()*255);
-
-	var planetTwoR = Math.floor(Math.random()*255);
-	var planetTwoG = Math.floor(Math.random()*255);
-	var planetTwoB = Math.floor(Math.random()*255);
-
-	var planetThreeR = Math.floor(Math.random()*255);
-	var planetThreeG = Math.floor(Math.random()*255);
-	var planetThreeB = Math.floor(Math.random()*255);
+var cleft, ctop;
 
 // one-time initialization.
 // by default, this method is only invoked once, upon page launch.
@@ -26,13 +14,15 @@ var frameCount = 0;
 function init(canvas, ctx) {
 	h = canvas.height;
 	w = canvas.width;
+        cleft = canvas.offsetLeft;
+        ctop = canvas.offsetTop;
 	ctx.translate(w/2, h/2);
 	canvas.addEventListener("click", onAddEvent);
 }
 
 function onAddEvent(event) {
-	var x = event.offsetX;
-	var y = event.offsetY;
+	var x = event.pageX - cleft - w/2;
+	var y = event.pageY - ctop - h/2;
 	var p = createPlanet(x, y);
 	planets.push(p);
 }
@@ -42,8 +32,8 @@ function createPlanet(x, y) {
 		r: Math.floor(Math.random()*255),
 		g: Math.floor(Math.random()*255),
 		b: Math.floor(Math.random()*255),
-		distance: Math.sqrt(x*x + y*y),
-		angle: Math.atan2(y, x),
+		distance: Math.sqrt(x*x+y*y),
+		angle: Math.atan2(y, x) * 180/Math.PI,
 		radius: 15 + Math.floor(30*Math.random()),
 		angularSpeed: 0.5 + Math.random()*3,
 		dir: Math.random() < 0.5 ? -1 : 1
@@ -54,11 +44,11 @@ function createPlanet(x, y) {
 function drawPlanet(planet, ctx) {
 
   // update planet angle
-  planet.angle += planet.angularSpeed;
-
   // dir is either 1 or -1
-  var x = planet.distance * planet.dir * Math.cos(planet.angle * Math.PI/180);
-  var y = planet.distance * planet.dir * Math.sin(planet.angle * Math.PI/180);
+  planet.angle += planet.dir * planet.angularSpeed;
+
+  var x = planet.distance * Math.cos(planet.angle * Math.PI/180);
+  var y = planet.distance * Math.sin(planet.angle * Math.PI/180);
 
 
   // draw planet at location x, y with radius and color randomized
