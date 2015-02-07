@@ -3,9 +3,19 @@
 var h;
 var w;
 var planets = [];
+var stars = [];
 var wait = 1;
 var frameCount = 0;
 var cleft, ctop;
+
+function createStar() {
+	var s = {
+		x: Math.floor(Math.random() * (2*w)-w),
+		y: Math.floor(Math.random() * (2*h)-h),
+		size: Math.floor(1+Math.random()*3)
+	};
+	return s;
+}
 
 // one-time initialization.
 // by default, this method is only invoked once, upon page launch.
@@ -14,10 +24,14 @@ var cleft, ctop;
 function init(canvas, ctx) {
 	h = canvas.height;
 	w = canvas.width;
-        cleft = canvas.offsetLeft;
-        ctop = canvas.offsetTop;
+    cleft = canvas.offsetLeft;
+    ctop = canvas.offsetTop;
 	ctx.translate(w/2, h/2);
 	canvas.addEventListener("click", onAddEvent);
+	for (var i=0;i<300;i++){
+		var s = createStar();
+		stars.push(s);
+	}
 }
 
 function onAddEvent(event) {
@@ -67,6 +81,14 @@ function draw(canvas, ctx) {
 
 	ctx.fillStyle = "black";
  	ctx.fillRect(-w, -h, 2*w, 2*h);
+
+ 	for (var i=0;i<stars.length;i++) {
+ 		ctx.fillStyle = "white";
+ 		ctx.beginPath();
+ 		ctx.rect(stars[i].x,stars[i].y,stars[i].size,stars[i].size);
+ 		ctx.fill();
+ 		ctx.closePath();
+ 	}
 
 	for (var i=0; i<planets.length; ++i) {
 		drawPlanet(planets[i],ctx);
